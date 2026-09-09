@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thatchanamoorthy Industries - Stone Temple Architecture</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-art: #F9F6F0;
+            --bg-card: #FFFFFF;
+            --terracotta: #8C3A1D;
+            --terracotta-dark: #6B2B14;
+            --charcoal: #1A1A1A;
+            --sand-border: #E3DAC9;
+            --sand-muted: #6E685E;
+            --gold-accent: #B8860B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--bg-art);
+            color: var(--charcoal);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            display: flex;
+            position: relative;
+        }
+
+        /* =========================================================
+           1. DYNAMIC PILLAR SIDEBAR (SLIDES & MIRRORS ON SWIPE)
+           ========================================================= */
+        .pillar-sidebar {
+            width: 15%;
+            min-width: 65px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(180deg, #F5EFE6 0%, #EFE5D5 100%);
+            z-index: 1000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pillar-sidebar img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Position state: Pillar moved to RIGHT side + MIRROR EFFECT */
+        .pillar-sidebar.pillar-right {
+            left: 85%;
+            border-left: 2px solid var(--terracotta);
+            border-right: none;
+            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .pillar-sidebar.pillar-right img {
+            transform: scaleX(-1); /* Flips piller.jpeg into a mirror image */
+        }
+
+        /* Position state: Pillar on LEFT side (Normal orientation) */
+        .pillar-sidebar.pillar-left {
+            left: 0;
+            border-right: 2px solid var(--terracotta);
+            border-left: none;
+        }
+
+        .pillar-sidebar.pillar-left img {
+            transform: scaleX(1);
+        }
+
+        /* =========================================================
+           2. MAIN CONTENT WRAPPER
+           ========================================================= */
+        .main-wrapper {
+            width: 85%;
+            margin-left: 15%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1), margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Content shift when pillar moves to Right */
+        .main-wrapper.pillar-right-active {
+            margin-left: 0;
+            margin-right: 15%;
+        }
+
+        /* TOP BRAND HEADER */
+        .top-brand-header {
+            min-height: 18vh;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--sand-border);
+            padding: 1.8rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .top-brand-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 2.5rem;
+            width: 100px;
+            height: 3px;
+            background-color: var(--terracotta);
+        }
+
+        .brand-title-box h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--terracotta);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .brand-title-box p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-accent);
+            margin-top: 0.4rem;
+            font-weight: 700;
+        }
+
+        .address-box {
+            text-align: right;
+            font-size: 0.88rem;
+            color: var(--charcoal);
+            line-height: 1.5;
+        }
+
+        .address-box .address-text {
+            color: var(--sand-muted);
+            font-weight: 500;
+        }
+
+        .map-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+            padding: 8px 18px;
+            background-color: var(--terracotta);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(140, 58, 29, 0.2);
+        }
+
+        .map-link-btn:hover {
+            background-color: var(--terracotta-dark);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN BODY CONTENT */
+        .content-container {
+            padding: 2.5rem;
+            flex: 1;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--terracotta);
+            font-size: 1.2rem;
+        }
+
+        .swipe-instruction {
+            font-size: 0.82rem;
+            color: var(--sand-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        /* SWIPEABLE GALLERY CAROUSEL */
+        .gallery-wrapper {
+            position: relative;
+            margin-bottom: 3.5rem;
+        }
+
+        .gallery-carousel {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding: 10px 5px 20px 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .gallery-carousel::-webkit-scrollbar-track {
+            background: #EAE3D2;
+            border-radius: 10px;
+        }
+
+        .gallery-carousel::-webkit-scrollbar-thumb {
+            background: var(--terracotta);
+            border-radius: 10px;
+        }
+
+        .gallery-card {
+            flex: 0 0 100%;
+            min-width: 280px;
+            scroll-snap-align: start;
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--sand-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        /* PERFECT IMAGE FIT CONTAINER */
+        .img-container {
+            width: 100%;
+            height: 440px;
+            overflow: hidden;
+            position: relative;
+            background-color: #F4EFE6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Ensures complete image fits inside container without cropping */
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .card-details {
+            padding: 1.2rem 1.5rem;
+            background: #FFFFFF;
+            border-top: 1px solid var(--sand-border);
+            text-align: center;
+        }
+
+        .card-details h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--charcoal);
+        }
+
+        /* Navigation Arrows */
+        .nav-btn {
+            position: absolute;
+            top: 45%;
+            transform: translateY(-50%);
+            width: 46px;
+            height: 46px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--sand-border);
+            color: var(--charcoal);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--terracotta);
+            color: #FFFFFF;
+            border-color: var(--terracotta);
+        }
+
+        .nav-btn.prev { left: -22px; }
+        .nav-btn.next { right: -22px; }
+
+        /* LOCATION MAP SECTION */
+        .map-section {
+            margin-top: 1rem;
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--sand-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            background-color: var(--bg-card);
+        }
+
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 1.8rem 2.5rem;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--sand-border);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--sand-muted);
+        }
+
+        /* =========================================================
+           3. RESPONSIVE ALIGNMENT FOR MOBILE & LAPTOPS
+           ========================================================= */
+        @media (max-width: 850px) {
+            .pillar-sidebar {
+                width: 18%;
+            }
+
+            .pillar-sidebar.pillar-right {
+                left: 82%;
+            }
+
+            .main-wrapper {
+                width: 82%;
+                margin-left: 18%;
+            }
+
+            .main-wrapper.pillar-right-active {
+                margin-left: 0;
+                margin-right: 18%;
+            }
+
+            .top-brand-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem 1rem;
+                gap: 1rem;
+            }
+
+            .top-brand-header::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .brand-title-box h1 {
+                font-size: 1.4rem;
+            }
+
+            .address-box {
+                text-align: center;
+                font-size: 0.8rem;
+            }
+
+            .content-container {
+                padding: 1.2rem 1rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+
+            .img-container {
+                height: 320px;
+            }
+
+            .nav-btn.prev { left: -5px; }
+            .nav-btn.next { right: -5px; }
+
+            .map-frame {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DYNAMIC PILLAR SIDEBAR (SLIDES LEFT/RIGHT AND MIRRORS ON SWIPE) -->
+    <aside class="pillar-sidebar pillar-left" id="pillarSidebar">
+        <img src="piller.jpeg" alt="Traditional Stone Temple Pillar Design">
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-wrapper" id="mainWrapper">
+
+        <!-- TOP HEADER AREA -->
+        <header class="top-brand-header">
+            <div class="brand-title-box">
+                <h1>Thatchanamoorthy Industries</h1>
+                <p>Sculpture & Stone Temple Architecture</p>
+            </div>
+            
+            <div class="address-box">
+                <p><strong>Workshop Address:</strong></p>
+                <p class="address-text">Shengottai - Kollam Road, Tenkasi District - 627809, Tamil Nadu</p>
+                <a href="https://maps.app.goo.gl/rXPc6onosyPoAUS67" target="_blank" class="map-link-btn">
+                    <i class="fa-solid fa-location-arrow"></i> Open Map Location
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="content-container">
+
+            <!-- WORK SHOWCASE GALLERY -->
+            <section class="gallery-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fa-solid fa-place-of-worship"></i> Craftsmanship Showcase
+                    </h2>
+                    <span class="swipe-instruction">
+                        <i class="fa-solid fa-hand-pointer"></i> Swipe left / right to toggle mirror pillar
+                    </span>
+                </div>
+
+                <!-- Navigation Controls -->
+                <button class="nav-btn prev" onclick="slideGallery(-1)" aria-label="Previous image">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" onclick="slideGallery(1)" aria-label="Next image">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+                <!-- Swipeable Gallery Carousel -->
+                <div class="gallery-carousel" id="artCarousel">
+                    
+                    <!-- Card 1 (img1.jpeg) -->
+                    <article class="gallery-card">
+                        <div class="img-container">
+                            <img src="img1.jpeg" alt="Stone Temple Entrance Structure">
+                        </div>
+                        <div class="card-details">
+                            <h3>Stone Temple Entrance Architecture</h3>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 (img2.jpeg) -->
+                    <article class="gallery-card">
+                        <div class="img-container">
+                            <img src="img2.jpeg" alt="Fine Pillar Chiseling Work">
+                        </div>
+                        <div class="card-details">
+                            <h3>Hand Chiseling & Granite Pillar Carving</h3>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- LOCATION MAP SECTION BELOW SWIPE GALLERY -->
+            <section class="map-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fa-solid fa-map-pin"></i> Visit Workshop
+                    </h2>
+                </div>
+                
+                <div class="map-frame">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3942.348123287019!2d77.2400!3d8.9800!2m3!1f0!2f0!3f0!2m3!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwNTgnNDguMCJOIDc3wrAxNCc0OC4wIkU!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>&copy; 2026 Thatchanamoorthy Industries. All rights reserved. | Traditional Stone Architecture & Sculptures, Tenkasi</p>
+        </footer>
+
+    </div>
+
+    <!-- CAROUSEL & DYNAMIC MIRROR PILLAR SCRIPT -->
+    <script>
+        const carousel = document.getElementById('artCarousel');
+        const pillarSidebar = document.getElementById('pillarSidebar');
+        const mainWrapper = document.getElementById('mainWrapper');
+
+        function slideGallery(direction) {
+            const card = carousel.querySelector('.gallery-card');
+            const cardWidth = card.offsetWidth + 32;
+            carousel.scrollBy({
+                left: direction * cardWidth,
+                behavior: 'smooth'
+            });
+        }
+
+        // Toggle Pillar Position & Mirror Effect on Scroll/Swipe
+        carousel.addEventListener('scroll', () => {
+            const scrollLeft = carousel.scrollLeft;
+            const cardWidth = carousel.querySelector('.gallery-card').offsetWidth;
+
+            if (scrollLeft > cardWidth / 2) {
+                // Move Pillar to Right Side + Mirror Flip
+                pillarSidebar.classList.remove('pillar-left');
+                pillarSidebar.classList.add('pillar-right');
+                mainWrapper.classList.add('pillar-right-active');
+            } else {
+                // Move Pillar to Left Side + Normal Orientation
+                pillarSidebar.classList.remove('pillar-right');
+                pillarSidebar.classList.add('pillar-left');
+                mainWrapper.classList.remove('pillar-right-active');
+            }
+        });
+    </script>
+</body>
+</html>
