@@ -73,7 +73,7 @@
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Position state: Pillar moved to RIGHT side + MIRROR EFFECT */
+        /* Pillar moved to RIGHT side + MIRROR EFFECT */
         .pillar-sidebar.pillar-right {
             left: 85%;
             border-left: 2px solid var(--terracotta);
@@ -82,10 +82,10 @@
         }
 
         .pillar-sidebar.pillar-right img {
-            transform: scaleX(-1); /* Flips piller.jpeg into a mirror image */
+            transform: scaleX(-1);
         }
 
-        /* Position state: Pillar on LEFT side (Normal orientation) */
+        /* Pillar on LEFT side (Normal orientation) */
         .pillar-sidebar.pillar-left {
             left: 0;
             border-right: 2px solid var(--terracotta);
@@ -108,7 +108,6 @@
             transition: margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1), margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Content shift when pillar moves to Right */
         .main-wrapper.pillar-right-active {
             margin-left: 0;
             margin-right: 15%;
@@ -216,7 +215,7 @@
             transform: translateY(-2px);
         }
 
-        /* FLOATING WHATSAPP BUTTON (BOTTOM RIGHT) */
+        /* FLOATING WHATSAPP BUTTON */
         .floating-whatsapp {
             position: fixed;
             bottom: 25px;
@@ -277,7 +276,7 @@
             font-weight: 600;
         }
 
-        /* SWIPEABLE GALLERY CAROUSEL */
+        /* GALLERY CAROUSEL */
         .gallery-wrapper {
             position: relative;
             margin-bottom: 3.5rem;
@@ -417,27 +416,12 @@
             color: var(--sand-muted);
         }
 
-        /* =========================================================
-           3. RESPONSIVE ALIGNMENT FOR MOBILE & LAPTOPS
-           ========================================================= */
+        /* RESPONSIVE DESIGN */
         @media (max-width: 850px) {
-            .pillar-sidebar {
-                width: 18%;
-            }
-
-            .pillar-sidebar.pillar-right {
-                left: 82%;
-            }
-
-            .main-wrapper {
-                width: 82%;
-                margin-left: 18%;
-            }
-
-            .main-wrapper.pillar-right-active {
-                margin-left: 0;
-                margin-right: 18%;
-            }
+            .pillar-sidebar { width: 18%; }
+            .pillar-sidebar.pillar-right { left: 82%; }
+            .main-wrapper { width: 82%; margin-left: 18%; }
+            .main-wrapper.pillar-right-active { margin-left: 0; margin-right: 18%; }
 
             .top-brand-header {
                 flex-direction: column;
@@ -451,22 +435,10 @@
                 transform: translateX(-50%);
             }
 
-            .brand-title-box h1 {
-                font-size: 1.4rem;
-            }
-
-            .address-box {
-                text-align: center;
-                font-size: 0.8rem;
-            }
-
-            .header-actions {
-                justify-content: center;
-            }
-
-            .content-container {
-                padding: 1.2rem 1rem;
-            }
+            .brand-title-box h1 { font-size: 1.4rem; }
+            .address-box { text-align: center; font-size: 0.8rem; }
+            .header-actions { justify-content: center; }
+            .content-container { padding: 1.2rem 1rem; }
 
             .section-header {
                 flex-direction: column;
@@ -474,16 +446,10 @@
                 gap: 0.4rem;
             }
 
-            .img-container {
-                height: 320px;
-            }
-
+            .img-container { height: 320px; }
             .nav-btn.prev { left: -5px; }
             .nav-btn.next { right: -5px; }
-
-            .map-frame {
-                height: 300px;
-            }
+            .map-frame { height: 300px; }
 
             .floating-whatsapp {
                 width: 50px;
@@ -497,7 +463,7 @@
 </head>
 <body>
 
-    <!-- DYNAMIC PILLAR SIDEBAR (SLIDES LEFT/RIGHT AND MIRRORS ON SWIPE) -->
+    <!-- DYNAMIC PILLAR SIDEBAR -->
     <aside class="pillar-sidebar pillar-left" id="pillarSidebar">
         <img src="piller.jpeg" alt="Traditional Stone Temple Pillar Design">
     </aside>
@@ -519,8 +485,9 @@
                     <a href="https://maps.app.goo.gl/rXPc6onosyPoAUS67" target="_blank" class="map-link-btn">
                         <i class="fa-solid fa-location-arrow"></i> Open Map
                     </a>
-                    <!-- WHATSAPP HEADER LINK -->
-                    <a href="https://wa.me/919444390688?text=Can%20i%20get%20more%20info" target="_blank" class="whatsapp-btn">
+                    
+                    <!-- WHATSAPP HEADER LINK (WITH MESSAGE AND WEBSITE LINK) -->
+                    <a href="https://wa.me/919444390688?text=Can%20i%20get%20more%20info%3F%20Website%3A%20https%3A%2F%2Fyourwebsite.com" target="_blank" class="whatsapp-btn">
                         <i class="fa-brands fa-whatsapp"></i> WhatsApp
                     </a>
                 </div>
@@ -575,7 +542,6 @@
                 </div>
             </section>
 
-            <!-- LOCATION MAP SECTION BELOW SWIPE GALLERY -->
             
         </main>
 
@@ -586,8 +552,8 @@
 
     </div>
 
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/919444390688?text=Can%20i%20get%20more%20info" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+    <!-- FLOATING WHATSAPP BUTTON (WITH MESSAGE AND WEBSITE LINK) -->
+    <a href="https://wa.me/919444390688?text=Can%20i%20get%20more%20info%3F%20Website%3A%20https%3A%2F%2Fyourwebsite.com" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -612,12 +578,10 @@
             const cardWidth = carousel.querySelector('.gallery-card').offsetWidth;
 
             if (scrollLeft > cardWidth / 2) {
-                // Move Pillar to Right Side + Mirror Flip
                 pillarSidebar.classList.remove('pillar-left');
                 pillarSidebar.classList.add('pillar-right');
                 mainWrapper.classList.add('pillar-right-active');
             } else {
-                // Move Pillar to Left Side + Normal Orientation
                 pillarSidebar.classList.remove('pillar-right');
                 pillarSidebar.classList.add('pillar-left');
                 mainWrapper.classList.remove('pillar-right-active');
